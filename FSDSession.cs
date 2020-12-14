@@ -13,13 +13,13 @@ namespace Vatsim.Fsd.Connector
 {
 	public class FSDSession
 	{
-		[DllImport("Vatsim.Fsd.ClientAuth.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr GenerateAuthResponse(string challengeKey, string key, string clientPath, string pluginPath);
+		[DllImport("vatsimauth", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		public static extern IntPtr GenerateAuthResponse(string challengeKey, string key);
 
-		[DllImport("Vatsim.Fsd.ClientAuth.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("vatsimauth", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr GenerateAuthChallenge();
 
-		[DllImport("Vatsim.Fsd.ClientAuth.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("vatsimauth", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ushort ClientPublicKey();
 
 		public ushort GetClientKey()
@@ -1139,7 +1139,7 @@ namespace Vatsim.Fsd.Connector
 				if ((pdu is PDUClientIdentification) && string.IsNullOrEmpty((pdu as PDUClientIdentification).InitialChallenge))
 				{
 					string initialChallenge = Marshal.PtrToStringAnsi(GenerateAuthChallenge());
-					mServerAuthSessionKey = Marshal.PtrToStringAnsi(GenerateAuthResponse(initialChallenge, null, ClientProperties.ClientHash, ClientProperties.PluginHash));
+					mServerAuthSessionKey = Marshal.PtrToStringAnsi(GenerateAuthResponse(initialChallenge, null));
 					(pdu as PDUClientIdentification).InitialChallenge = initialChallenge;
 				}
 				if (
@@ -1192,7 +1192,7 @@ namespace Vatsim.Fsd.Connector
 			{
 				return;
 			}
-			string expectedResponse = Marshal.PtrToStringAnsi(GenerateAuthResponse(mLastServerAuthChallenge, mServerAuthChallengeKey, ClientProperties.ClientHash, ClientProperties.PluginHash));
+			string expectedResponse = Marshal.PtrToStringAnsi(GenerateAuthResponse(mLastServerAuthChallenge, mServerAuthChallengeKey));
 			if (response != expectedResponse)
 			{
 				RaiseNetworkError("The server has failed to respond correctly to the authentication challenge.");
@@ -1360,7 +1360,7 @@ namespace Vatsim.Fsd.Connector
 										PDUServerIdentification pdu = PDUServerIdentification.Parse(fields);
 										if (GetClientKey() != 0)
 										{
-											mClientAuthSessionKey = Marshal.PtrToStringAnsi(GenerateAuthResponse(pdu.InitialChallengeKey, null, ClientProperties.ClientHash, ClientProperties.PluginHash));
+											mClientAuthSessionKey = Marshal.PtrToStringAnsi(GenerateAuthResponse(pdu.InitialChallengeKey, null));
 											mClientAuthChallengeKey = mClientAuthSessionKey;
 										}
 										RaiseServerIdentificationReceived(pdu);
@@ -1560,7 +1560,7 @@ namespace Vatsim.Fsd.Connector
 									if (GetClientKey() != 0)
 									{
 										PDUAuthChallenge pdu = PDUAuthChallenge.Parse(fields);
-										string response = Marshal.PtrToStringAnsi(GenerateAuthResponse(pdu.Challenge, mClientAuthChallengeKey, ClientProperties.ClientHash, ClientProperties.PluginHash));
+										string response = Marshal.PtrToStringAnsi(GenerateAuthResponse(pdu.Challenge, mClientAuthChallengeKey));
 										mClientAuthChallengeKey = GenerateMD5Digest(mClientAuthSessionKey + response);
 										PDUAuthResponse responsePDU = new PDUAuthResponse(pdu.To, pdu.From, response);
 										SendPDU(responsePDU);
