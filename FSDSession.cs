@@ -7,9 +7,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Vatsim.Fsd.Connector.PDU;
+using FsdWrapper.PDU;
 
-namespace Vatsim.Fsd.Connector
+namespace FsdWrapper
 {
 	public class FSDSession
 	{

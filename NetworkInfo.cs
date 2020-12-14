@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 
-namespace Vatsim.Fsd.Connector
+namespace FsdWrapper
 {
 	public class NetworkInfo
 	{

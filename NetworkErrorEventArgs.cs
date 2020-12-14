@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vatsim.Fsd.Connector
+namespace FsdWrapper
 {
 	public class NetworkErrorEventArgs : EventArgs
 	{

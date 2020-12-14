@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace Vatsim.Fsd.Connector.PDU
+namespace FsdWrapper.PDU
 {
 	public class PDUPilotPosition : PDUBase
 	{

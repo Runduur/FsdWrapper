@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-namespace Vatsim.Fsd.Connector.PDU
+namespace FsdWrapper.PDU
 {
 	public class PDUFlightStrip : PDUBase
 	{

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vatsim.Fsd.Connector.PDU
+namespace FsdWrapper.PDU
 {
 	public class PDUFormatException : Exception
 	{

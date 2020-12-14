@@ -1,4 +1,4 @@
-﻿namespace Vatsim.Fsd.Connector
+﻿namespace FsdWrapper
 {
 	public class NetworkServerInfo
 	{

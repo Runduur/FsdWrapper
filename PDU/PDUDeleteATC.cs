@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Vatsim.Fsd.Connector.PDU
+namespace FsdWrapper.PDU
 {
 	public class PDUDeleteATC : PDUBase
 	{
